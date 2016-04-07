@@ -17,6 +17,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var toolBarTop: UIToolbar!
     @IBOutlet weak var toolBarBottom: UIToolbar!
+    @IBOutlet weak var introText: UILabel!
     
     
     var memeTextAttributes = [
@@ -34,12 +35,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.bottomText.delegate = self
         
         // PROPERTIES
+        self.view.backgroundColor = UIColor.grayColor()
         topText.defaultTextAttributes = memeTextAttributes
         bottomText.defaultTextAttributes = memeTextAttributes
         topText.text = "TOP"
         topText.textAlignment = NSTextAlignment.Center
         bottomText.text = "BOTTOM"
-        bottomText.textAlignment = NSTextAlignment.Center        
+        bottomText.textAlignment = NSTextAlignment.Center
         shareButton.enabled = false
     }
     
@@ -65,6 +67,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             self.dismissViewControllerAnimated(true, completion: nil)
         }
         shareButton.enabled = true
+        introText.hidden = true
     }
 
     // IMAGE PICKING ACTIONS

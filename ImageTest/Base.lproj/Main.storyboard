@@ -5,6 +5,11 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Impact.ttf">
+            <string>Impact</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -92,6 +97,21 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose a photo to begin!" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="lyh-28-0Jf">
+                                <rect key="frame" x="20" y="200" width="560" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="WpC-dV-U5n"/>
+                                    <constraint firstAttribute="width" constant="200" id="dGL-vg-b4U"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Impact" family="Impact" pointSize="35"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="dGL-vg-b4U"/>
+                                    </mask>
+                                </variation>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -100,9 +120,13 @@
                             <constraint firstAttribute="trailingMargin" secondItem="jcf-ho-VSb" secondAttribute="trailing" constant="-20" id="2lx-dW-bVv"/>
                             <constraint firstAttribute="trailingMargin" secondItem="OuN-sD-kto" secondAttribute="trailing" constant="-20" id="47q-oH-VHg"/>
                             <constraint firstItem="72v-Yi-Cq1" firstAttribute="top" secondItem="jcf-ho-VSb" secondAttribute="bottom" constant="15" id="4mb-YJ-Ddn"/>
+                            <constraint firstItem="lyh-28-0Jf" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="5ET-Z9-UeX"/>
                             <constraint firstItem="72v-Yi-Cq1" firstAttribute="top" secondItem="jcf-ho-VSb" secondAttribute="bottom" constant="15" id="8s7-Ad-YyT"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="lyh-28-0Jf" secondAttribute="trailing" id="GOO-BJ-ocb"/>
                             <constraint firstAttribute="trailingMargin" secondItem="TLp-bY-lv7" secondAttribute="trailing" id="IM3-7r-sms"/>
+                            <constraint firstItem="lyh-28-0Jf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Nrw-xp-En6"/>
                             <constraint firstAttribute="trailingMargin" secondItem="T0s-ZV-aJW" secondAttribute="trailing" constant="-20" id="OSY-6j-y5u"/>
+                            <constraint firstItem="lyh-28-0Jf" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="PJK-1h-8JF"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="T0s-ZV-aJW" secondAttribute="bottom" id="Ptn-vx-eGb"/>
                             <constraint firstItem="OuN-sD-kto" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="SdF-Lz-Rqy"/>
                             <constraint firstItem="TLp-bY-lv7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="aO5-xi-vm7"/>
@@ -124,6 +148,7 @@
                         <outlet property="bottomText" destination="TLp-bY-lv7" id="C3v-pb-IlK"/>
                         <outlet property="cameraButton" destination="whO-TP-fb3" id="DRF-Sl-lVK"/>
                         <outlet property="imageView" destination="OuN-sD-kto" id="ioG-FY-K2n"/>
+                        <outlet property="introText" destination="lyh-28-0Jf" id="rTI-xm-RuF"/>
                         <outlet property="shareButton" destination="Aiq-ij-t0M" id="emf-LB-sy6"/>
                         <outlet property="toolBarBottom" destination="T0s-ZV-aJW" id="fd1-HG-J1V"/>
                         <outlet property="toolBarTop" destination="jcf-ho-VSb" id="DYp-MT-nBd"/>
