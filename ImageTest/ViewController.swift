@@ -19,10 +19,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var toolBarBottom: UIToolbar!
     
     
-    let memeTextAttributes = [
+    var memeTextAttributes = [
         NSStrokeColorAttributeName : UIColor.blackColor(),
         NSForegroundColorAttributeName : UIColor.whiteColor(),
-        NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+        NSFontAttributeName : UIFont(name: "Impact", size: 40)!,
         NSStrokeWidthAttributeName : -5.0,
     ]
     
@@ -39,8 +39,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         topText.text = "TOP"
         topText.textAlignment = NSTextAlignment.Center
         bottomText.text = "BOTTOM"
-        bottomText.textAlignment = NSTextAlignment.Center
-        
+        bottomText.textAlignment = NSTextAlignment.Center        
         shareButton.enabled = false
     }
     
@@ -131,7 +130,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     // MEME CREATION
     func save(memedImage: UIImage) {
         //Create the Meme
-        let meme = Meme( textTop: topText.text!, textBottom: bottomText.text!, originalImage: imageView.image!, memedImage: memedImage)
+        _ = Meme( textTop: topText.text!, textBottom: bottomText.text!, originalImage: imageView.image!, memedImage: memedImage)
     }
     
     func generateMemedImage() -> UIImage {
@@ -167,6 +166,47 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
         }
+    }
+    
+    
+    @IBAction func changeFonts(sender: AnyObject) {
+        // SETUP ACTION SHEET
+        let optionMenu = UIAlertController(title: nil, message: "Choose a New Fonts", preferredStyle: .ActionSheet)
+        let changeHelvetica = UIAlertAction(title: "Helvetica Bold", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.memeTextAttributes[NSFontAttributeName] = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)
+            print("CHANGE TO HELVETICA!")
+            self.topText.defaultTextAttributes = self.memeTextAttributes
+            self.bottomText.defaultTextAttributes = self.memeTextAttributes
+            self.topText.textAlignment = NSTextAlignment.Center
+            self.bottomText.textAlignment = NSTextAlignment.Center
+
+        })
+        let changeOptima = UIAlertAction(title: "Optima", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.memeTextAttributes[NSFontAttributeName] = UIFont(name: "OptimaRegular", size: 40)
+            print("CHANGE TO OPTIMA!")
+            self.topText.defaultTextAttributes = self.memeTextAttributes
+            self.bottomText.defaultTextAttributes = self.memeTextAttributes
+            self.topText.textAlignment = NSTextAlignment.Center
+            self.bottomText.textAlignment = NSTextAlignment.Center
+        })
+        let changeImpact = UIAlertAction(title: "Impact", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.memeTextAttributes[NSFontAttributeName] = UIFont(name: "Impact", size: 40)
+            print("CHANGE TO IMPACT!")
+            self.topText.defaultTextAttributes = self.memeTextAttributes
+            self.bottomText.defaultTextAttributes = self.memeTextAttributes
+            self.topText.textAlignment = NSTextAlignment.Center
+            self.bottomText.textAlignment = NSTextAlignment.Center
+        })
+        
+        // POPULATE ACTION SHEET
+        optionMenu.addAction(changeHelvetica)
+        optionMenu.addAction(changeOptima)
+        optionMenu.addAction(changeImpact)
+        
+        self.presentViewController(optionMenu, animated: true, completion: nil)
     }
     
     
