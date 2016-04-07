@@ -50,15 +50,6 @@ class MakeMemeViewController: UIViewController, UIImagePickerControllerDelegate,
         formattingBlock(topText)
         formattingBlock(bottomText)
         shareButton.enabled = false
-        
-//        OLD CODE - DELETE SOON
-//        topText.defaultTextAttributes = memeTextAttributes
-//        bottomText.defaultTextAttributes = memeTextAttributes
-//        topText.text = "TOP"
-//        topText.textAlignment = NSTextAlignment.Center
-//        bottomText.text = "BOTTOM"
-//        bottomText.textAlignment = NSTextAlignment.Center
-        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -103,27 +94,12 @@ class MakeMemeViewController: UIViewController, UIImagePickerControllerDelegate,
         introText.hidden = true
     }
     
-    
     // IMAGE PICKING ACTIONS
     @IBAction func pickAnImage(sender: AnyObject) {
-        
-//        OLD CODE - DELETE SOON
-//        let imagePicker = UIImagePickerController()
-//        imagePicker.delegate = self
-//        imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-//        presentViewController(imagePicker, animated: true, completion: nil)
-        
         pickingImages("album")
     }
     
     @IBAction func pickImageFromCamera(sender: AnyObject) {
-
-//        OLD CODE - DELETE SOON
-//        let imagePicker = UIImagePickerController()
-//        imagePicker.delegate = self
-//        imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
-//        presentViewController(imagePicker, animated: true, completion: nil)
-        
         pickingImages("camera")
         
     }
@@ -184,7 +160,6 @@ class MakeMemeViewController: UIViewController, UIImagePickerControllerDelegate,
         toolBarTop.hidden = true
         toolBarBottom.hidden = true
         
-        
         // Render view to an image
         UIGraphicsBeginImageContext(self.view.frame.size)
         view.drawViewHierarchyInRect(self.view.frame, afterScreenUpdates: true)
@@ -212,7 +187,6 @@ class MakeMemeViewController: UIViewController, UIImagePickerControllerDelegate,
             }
         }
     }
-    
     
     @IBAction func changeFonts(sender: AnyObject) {
         // SETUP ACTION SHEET
