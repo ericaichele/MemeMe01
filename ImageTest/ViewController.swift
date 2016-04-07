@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
@@ -19,7 +19,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var toolBarBottom: UIToolbar!
     @IBOutlet weak var introText: UILabel!
     
-    
     var memeTextAttributes = [
         NSStrokeColorAttributeName : UIColor.blackColor(),
         NSForegroundColorAttributeName : UIColor.whiteColor(),
@@ -27,22 +26,36 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         NSStrokeWidthAttributeName : -5.0,
     ]
     
+    func formattingBlocks(textBlock:UITextField) {
+        textBlock.defaultTextAttributes = memeTextAttributes
+        textBlock.textAlignment = NSTextAlignment.Center
+        
+        if textBlock == bottomText {
+            bottomText.text = "BOTTOM"
+        } else if textBlock == topText {
+           topText.text = "TOP"
+        }
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // DELEGATES
-        self.topText.delegate = self
-        self.bottomText.delegate = self
+        topText.delegate = self
+        bottomText.delegate = self
         
         // PROPERTIES
         self.view.backgroundColor = UIColor.grayColor()
-        topText.defaultTextAttributes = memeTextAttributes
-        bottomText.defaultTextAttributes = memeTextAttributes
-        topText.text = "TOP"
-        topText.textAlignment = NSTextAlignment.Center
-        bottomText.text = "BOTTOM"
-        bottomText.textAlignment = NSTextAlignment.Center
         shareButton.enabled = false
+        formattingBlocks(topText)
+        formattingBlocks(bottomText)
+    }
+    
+    
+    
+    func redoAlignment(textField: UITextField) {
+        textField.textAlignment = NSTextAlignment.Center
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -60,6 +73,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.unsubscribeFromKeyboardNotifications()
     }
     
+    override func prefersStatusBarHidden() -> Bool {
+        return true     // status bar should be hidden
+    }
+    
     // PLACING THE IMAGE INTO UIIMAGE
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
@@ -72,36 +89,32 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
     // IMAGE PICKING ACTIONS
     @IBAction func pickAnImage(sender: AnyObject) {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        presentViewController(imagePicker, animated: true, completion: nil)
+        ImagePicker().pickerSource("album")
+        presentViewController(ImagePicker().imagePicker, animated: true, completion: nil)
     }
     
     @IBAction func pickImageFromCamera(sender: AnyObject) {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
-        presentViewController(imagePicker, animated: true, completion: nil)
+        ImagePicker().pickerSource("camera")
+        presentViewController(ImagePicker().imagePicker, animated: true, completion: nil)
         
     }
     
     // MOVE UI TO FIT KEYBOARD
     func keyboardWillShow(notification: NSNotification) {
         if bottomText.isFirstResponder() {
-            self.view.frame.origin.y -= getKeyboardHeight(notification)
+            self.view.frame.origin.y = getKeyboardHeight(notification) * -1
         }
     }
     
     func keyboardWillHide(notification: NSNotification) {
         if bottomText.isFirstResponder() {
-            self.view.frame.origin.y += getKeyboardHeight(notification)
+            self.view.frame.origin.y = 0
         }
     }
     
     func subscribeToKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MemeEditorViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MemeEditorViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
     
     func unsubscribeFromKeyboardNotifications() {
@@ -139,8 +152,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func generateMemedImage() -> UIImage {
         // TO DO: Hide Toolbar and Navbar
         UIApplication.sharedApplication().statusBarHidden = true
-        self.toolBarTop.hidden = true
-        self.toolBarBottom.hidden = true
+        toolBarTop.hidden = true
+        toolBarBottom.hidden = true
         
         
         // Render view to an image
@@ -151,8 +164,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         // TO DO: Show Toolbar and Navbar
         UIApplication.sharedApplication().statusBarHidden = false
-        self.toolBarTop.hidden = false
-        self.toolBarBottom.hidden = false
+        toolBarTop.hidden = false
+        toolBarBottom.hidden = false
         
         return memedImage
     }
@@ -178,30 +191,24 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let changeHelvetica = UIAlertAction(title: "Helvetica Bold", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.memeTextAttributes[NSFontAttributeName] = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)
-            print("CHANGE TO HELVETICA!")
-            self.topText.defaultTextAttributes = self.memeTextAttributes
-            self.bottomText.defaultTextAttributes = self.memeTextAttributes
-            self.topText.textAlignment = NSTextAlignment.Center
-            self.bottomText.textAlignment = NSTextAlignment.Center
-
+            self.formattingBlocks(self.topText)
+            self.formattingBlocks(self.bottomText)
+            print("\(self.memeTextAttributes[NSFontAttributeName])")
         })
         let changeOptima = UIAlertAction(title: "Optima", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.memeTextAttributes[NSFontAttributeName] = UIFont(name: "OptimaRegular", size: 40)
-            print("CHANGE TO OPTIMA!")
-            self.topText.defaultTextAttributes = self.memeTextAttributes
-            self.bottomText.defaultTextAttributes = self.memeTextAttributes
-            self.topText.textAlignment = NSTextAlignment.Center
-            self.bottomText.textAlignment = NSTextAlignment.Center
+            self.formattingBlocks(self.topText)
+            self.formattingBlocks(self.bottomText)
+            print("\(self.memeTextAttributes[NSFontAttributeName])")
+            
         })
         let changeImpact = UIAlertAction(title: "Impact", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.memeTextAttributes[NSFontAttributeName] = UIFont(name: "Impact", size: 40)
-            print("CHANGE TO IMPACT!")
-            self.topText.defaultTextAttributes = self.memeTextAttributes
-            self.bottomText.defaultTextAttributes = self.memeTextAttributes
-            self.topText.textAlignment = NSTextAlignment.Center
-            self.bottomText.textAlignment = NSTextAlignment.Center
+            self.formattingBlocks(self.topText)
+            self.formattingBlocks(self.bottomText)
+            print("\(self.memeTextAttributes[NSFontAttributeName])")
         })
         
         // POPULATE ACTION SHEET
@@ -209,7 +216,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         optionMenu.addAction(changeOptima)
         optionMenu.addAction(changeImpact)
         
-        self.presentViewController(optionMenu, animated: true, completion: nil)
+        presentViewController(optionMenu, animated: true, completion: nil)
     }
     
     
