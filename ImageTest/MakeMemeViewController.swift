@@ -107,13 +107,13 @@ class MakeMemeViewController: UIViewController, UIImagePickerControllerDelegate,
     // MOVE UI TO FIT KEYBOARD
     func keyboardWillShow(notification: NSNotification) {
         if bottomText.isFirstResponder() {
-            self.view.frame.origin.y -= getKeyboardHeight(notification)
+            self.view.frame.origin.y = getKeyboardHeight(notification) * -1
         }
     }
     
     func keyboardWillHide(notification: NSNotification) {
         if bottomText.isFirstResponder() {
-            self.view.frame.origin.y += getKeyboardHeight(notification)
+            self.view.frame.origin.y = 0
         }
     }
     
