@@ -67,8 +67,8 @@ class MakeMemeViewController: UIViewController, UIImagePickerControllerDelegate,
         self.unsubscribeFromKeyboardNotifications()
     }
     
-    func imagePickerTest() {
-        
+    override func prefersStatusBarHidden() -> Bool {
+        return true     // status bar should be hidden
     }
     
     // IMAGE PICKER FUNCTION
