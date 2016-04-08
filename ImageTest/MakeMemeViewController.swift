@@ -27,15 +27,10 @@ class MakeMemeViewController: UIViewController, UIImagePickerControllerDelegate,
         NSStrokeWidthAttributeName : -5.0,
     ]
     
-    func formattingBlock(textBlock: UITextField) {
+    func formattingBlock(textBlock: UITextField, fieldName: String) {
         textBlock.defaultTextAttributes = memeTextAttributes
         textBlock.textAlignment = NSTextAlignment.Center
-        
-        if textBlock == topText {
-            topText.text = "TOP"
-        } else if textBlock == bottomText {
-            bottomText.text = "BOTTOM"
-        }
+        textBlock.text = "\(fieldName)"
     }
     
     override func viewDidLoad() {
@@ -47,8 +42,8 @@ class MakeMemeViewController: UIViewController, UIImagePickerControllerDelegate,
         
         // PROPERTIES
         view.backgroundColor = UIColor.grayColor()
-        formattingBlock(topText)
-        formattingBlock(bottomText)
+        formattingBlock(topText, fieldName: "TOP")
+        formattingBlock(bottomText, fieldName: "BOTTOM")
         shareButton.enabled = false
     }
     
@@ -72,15 +67,22 @@ class MakeMemeViewController: UIViewController, UIImagePickerControllerDelegate,
     }
     
     // IMAGE PICKER FUNCTION
-    func pickingImages(inputName: String) {
+//    func pickingImages(inputName: String) {
+//        let imagePicker = UIImagePickerController()
+//        imagePicker.delegate = self
+//        
+//        if inputName == "camera" {
+//            imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
+//        } else if inputName == "album" {
+//            imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+//        }
+//        presentViewController(imagePicker, animated: true, completion: nil)
+//    }
+    
+    func pickingImages(sourceType: UIImagePickerControllerSourceType) {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        
-        if inputName == "camera" {
-            imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
-        } else if inputName == "album" {
-            imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        }
+        imagePicker.sourceType = sourceType
         presentViewController(imagePicker, animated: true, completion: nil)
     }
     
@@ -96,11 +98,11 @@ class MakeMemeViewController: UIViewController, UIImagePickerControllerDelegate,
     
     // IMAGE PICKING ACTIONS
     @IBAction func pickAnImage(sender: AnyObject) {
-        pickingImages("album")
+        pickingImages(.PhotoLibrary)
     }
     
     @IBAction func pickImageFromCamera(sender: AnyObject) {
-        pickingImages("camera")
+        pickingImages(.Camera)
         
     }
     
@@ -194,23 +196,23 @@ class MakeMemeViewController: UIViewController, UIImagePickerControllerDelegate,
         let changeHelvetica = UIAlertAction(title: "Helvetica Bold", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.memeTextAttributes[NSFontAttributeName] = UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)
-            self.formattingBlock(self.topText)
-            self.formattingBlock(self.bottomText)
+            self.formattingBlock(self.topText, fieldName: "TOP")
+            self.formattingBlock(self.bottomText, fieldName: "BOTTOM")
             print("\(self.memeTextAttributes[NSFontAttributeName])")
 
         })
         let changeOptima = UIAlertAction(title: "Optima", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.memeTextAttributes[NSFontAttributeName] = UIFont(name: "Optima-Regular", size: 40)
-            self.formattingBlock(self.topText)
-            self.formattingBlock(self.bottomText)
+            self.formattingBlock(self.topText, fieldName: "TOP")
+            self.formattingBlock(self.bottomText, fieldName: "BOTTOM")
             print("\(self.memeTextAttributes[NSFontAttributeName])")
         })
         let changeImpact = UIAlertAction(title: "Impact", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.memeTextAttributes[NSFontAttributeName] = UIFont(name: "Impact", size: 40)
-            self.formattingBlock(self.topText)
-            self.formattingBlock(self.bottomText)
+            self.formattingBlock(self.topText, fieldName: "TOP")
+            self.formattingBlock(self.bottomText, fieldName: "BOTTOM")
             print("\(self.memeTextAttributes[NSFontAttributeName])")
         })
         
