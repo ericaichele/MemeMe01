@@ -176,7 +176,7 @@
         <!--Meme Details View Controller-->
         <scene sceneID="84l-8Y-EXM">
             <objects>
-                <viewController id="WmM-s3-4RL" customClass="MemeDetailsViewController" customModule="ImageTest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MemeDetailsViewController" id="WmM-s3-4RL" customClass="MemeDetailsViewController" customModule="ImageTest" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DFT-Hr-8ct"/>
                         <viewControllerLayoutGuide type="bottom" id="f6L-3g-JI2"/>
@@ -185,23 +185,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AWWWYISSSSS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B4W-Vm-Gi1">
-                                <rect key="frame" x="20" y="275" width="560" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="Jlo-4q-M9K"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6TS-r1-pRt">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="B4W-Vm-Gi1" firstAttribute="leading" secondItem="D2E-Y2-mH7" secondAttribute="leadingMargin" id="Adb-i9-DW0"/>
-                            <constraint firstItem="B4W-Vm-Gi1" firstAttribute="centerY" secondItem="D2E-Y2-mH7" secondAttribute="centerY" id="SDl-OK-MSv"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="B4W-Vm-Gi1" secondAttribute="trailing" id="nPm-94-OP2"/>
+                            <constraint firstItem="6TS-r1-pRt" firstAttribute="top" secondItem="DFT-Hr-8ct" secondAttribute="bottom" id="ESu-tk-sqK"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6TS-r1-pRt" secondAttribute="trailing" constant="-20" id="dP5-55-5Hi"/>
+                            <constraint firstItem="6TS-r1-pRt" firstAttribute="leading" secondItem="D2E-Y2-mH7" secondAttribute="leadingMargin" constant="-20" id="fy8-LN-bxH"/>
+                            <constraint firstItem="f6L-3g-JI2" firstAttribute="top" secondItem="6TS-r1-pRt" secondAttribute="bottom" id="xsc-yV-VCD"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="imageView" destination="6TS-r1-pRt" id="Mzd-SM-1sx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fbn-NH-lpb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -366,7 +364,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="9uL-dw-F0V"/>
-        <segue reference="ieQ-gq-btC"/>
+        <segue reference="lKj-hF-6gh"/>
+        <segue reference="Cix-yx-uN4"/>
     </inferredMetricsTieBreakers>
 </document>
