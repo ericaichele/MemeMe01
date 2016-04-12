@@ -33,6 +33,8 @@ class MakeMemeViewController: UIViewController, UIImagePickerControllerDelegate,
         textBlock.text = "\(fieldName)"
     }
     
+    var meme: Meme! //???? Maybe?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -66,19 +68,7 @@ class MakeMemeViewController: UIViewController, UIImagePickerControllerDelegate,
         return true     // status bar should be hidden
     }
     
-    // IMAGE PICKER FUNCTION
-//    func pickingImages(inputName: String) {
-//        let imagePicker = UIImagePickerController()
-//        imagePicker.delegate = self
-//        
-//        if inputName == "camera" {
-//            imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
-//        } else if inputName == "album" {
-//            imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-//        }
-//        presentViewController(imagePicker, animated: true, completion: nil)
-//    }
-    
+    // IMAGE PICKER SOURCE
     func pickingImages(sourceType: UIImagePickerControllerSourceType) {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
@@ -153,7 +143,7 @@ class MakeMemeViewController: UIViewController, UIImagePickerControllerDelegate,
     // MEME CREATION
     func save(memedImage: UIImage) {
         //Create the Meme
-        var meme = Meme( textTop: topText.text!, textBottom: bottomText.text!, originalImage: imageView.image!, memedImage: memedImage)
+        var meme = Meme(textTop: topText.text!, textBottom: bottomText.text!, originalImage: imageView.image!, memedImage: memedImage)
         
         // Add it to the memes array in the Application Delegate
         let object = UIApplication.sharedApplication().delegate
@@ -181,6 +171,7 @@ class MakeMemeViewController: UIViewController, UIImagePickerControllerDelegate,
         return memedImage
     }
     
+    // SHARE BUTTON SETUP
     @IBAction func shareButtonPressed(sender: AnyObject) {
         let memedImage = self.generateMemedImage()
         let activityViewController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
@@ -195,6 +186,11 @@ class MakeMemeViewController: UIViewController, UIImagePickerControllerDelegate,
         }
     }
     
+    @IBAction func closeMakeMeme(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    // ACTION SHEET / FONT SETUP
     @IBAction func changeFonts(sender: AnyObject) {
         // SETUP ACTION SHEET
         let optionMenu = UIAlertController(title: nil, message: "Choose a New Fonts", preferredStyle: .ActionSheet)
