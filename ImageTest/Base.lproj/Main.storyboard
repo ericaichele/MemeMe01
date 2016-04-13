@@ -29,10 +29,10 @@
             </objects>
             <point key="canvasLocation" x="-1668" y="31"/>
         </scene>
-        <!--Saved Memes-->
+        <!--Meme Collection View Controller-->
         <scene sceneID="W8F-HR-7Qy">
             <objects>
-                <collectionViewController id="3Ig-Oe-bbK" customClass="MemeCollectionViewController" customModule="ImageTest" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController id="3Ig-Oe-bbK" userLabel="Meme Collection View Controller" customClass="MemeCollectionViewController" customModule="ImageTest" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Vsd-8H-E2w">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -364,7 +364,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="lKj-hF-6gh"/>
-        <segue reference="Cix-yx-uN4"/>
+        <segue reference="ieQ-gq-btC"/>
+        <segue reference="9uL-dw-F0V"/>
     </inferredMetricsTieBreakers>
 </document>

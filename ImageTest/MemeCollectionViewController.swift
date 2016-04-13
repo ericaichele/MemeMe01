@@ -6,16 +6,16 @@
 //  Copyright © 2016 Eric Aichele. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class MemeCollectionViewController: UICollectionViewController {
     
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     
-    var memes: [Meme] {
-        return (UIApplication.sharedApplication().delegate as! AppDelegate).memes
-    }
+    var memes: [Meme]!
+//    var memes: [Meme] {
+//        return (UIApplication.sharedApplication().delegate as! AppDelegate).memes
+//    }
     
     override func prefersStatusBarHidden() -> Bool {
         return true     // status bar should be hidden
@@ -35,6 +35,9 @@ class MemeCollectionViewController: UICollectionViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.hidden = false
+        let object = UIApplication.sharedApplication().delegate
+        let appDelegate = object as! AppDelegate
+        memes = appDelegate.memes
         collectionView!.reloadData()
     }
     
@@ -44,18 +47,18 @@ class MemeCollectionViewController: UICollectionViewController {
     
    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MemeCollectionViewCell", forIndexPath: indexPath) as! MemeCollectionViewCell
-        let meme = self.memes[indexPath.row]
+        let incomingMeme = self.memes[indexPath.row]
         
         //SET THE IMAGE AND TEXT
-        cell.memeImageView.image = meme.memedImage
+        cell.memeImageView.image = incomingMeme.memedImage
     
         return cell
         
     }
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let editMeme = self.storyboard!.instantiateViewControllerWithIdentifier("MakeMemeViewController") as! MakeMemeViewController
-        editMeme.meme = self.memes[indexPath.row]
-        self.navigationController!.pushViewController(editMeme, animated: true)
+        let memeDetails = self.storyboard!.instantiateViewControllerWithIdentifier("MemeDetailsViewController") as! MemeDetailsViewController
+        memeDetails.incomingMeme = self.memes[indexPath.row]
+        self.navigationController!.pushViewController(memeDetails, animated: true)
     }
 }

@@ -6,7 +6,6 @@
 //  Copyright © 2016 Eric Aichele. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class MemeDetailsViewController: UIViewController {
@@ -17,7 +16,10 @@ class MemeDetailsViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.imageView!.image = self.incomingMeme.memedImage
+        imageView.image = incomingMeme.memedImage
+//        if let memedImage = incomingMeme.memedImage {
+//            imageView!.image = memedImage
+//        }
     }
 
 }

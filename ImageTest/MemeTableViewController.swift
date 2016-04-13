@@ -10,13 +10,17 @@ import UIKit
 
 class MemeTableViewController: UITableViewController {
     
-    var memes: [Meme] {
-        return (UIApplication.sharedApplication().delegate as! AppDelegate).memes
-    }
+    var memes: [Meme]!
+//    var memes: [Meme] {
+//        return (UIApplication.sharedApplication().delegate as! AppDelegate).memes
+//    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        tableView!.reloadData()
+        let object = UIApplication.sharedApplication().delegate
+        let appDelegate = object as! AppDelegate
+        memes = appDelegate.memes
+        tableView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -26,7 +30,7 @@ class MemeTableViewController: UITableViewController {
     }
     
     override func prefersStatusBarHidden() -> Bool {
-        return true     // status bar should be hidden
+        return true
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -35,10 +39,13 @@ class MemeTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("MemeTableViewCell")!
-        _ = self.memes[indexPath.row]
+        let incomingMeme = self.memes[indexPath.row]
         
         //SET THE IMAGE AND TEXT
-        cell.imageView!.image = (UIApplication.sharedApplication().delegate as! AppDelegate).memes[indexPath.row].memedImage
+        cell.imageView!.image = incomingMeme.memedImage
+        cell.textLabel!.text = "\(incomingMeme.textTop)... \(incomingMeme.textBottom)"
+        cell.imageView!.sizeToFit()
+        print("Not a cell issue")
         
         return cell
     }
@@ -46,8 +53,10 @@ class MemeTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let memeDetails = self.storyboard!.instantiateViewControllerWithIdentifier("MemeDetailsViewController") as! MemeDetailsViewController
         memeDetails.incomingMeme = self.memes[indexPath.row]
-        self.navigationController!.pushViewController(memeDetails, animated: true)
-        
+        //tabBarController?.tabBar.hidden = true
+        navigationController!.pushViewController(memeDetails, animated: true)
+        print("Ok. \(memes.count)")
+        print("Ok. \(memes)")
         
         
     }
@@ -60,7 +69,7 @@ class MemeTableViewController: UITableViewController {
     // SWIPE TO DELETE
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.Delete) {
-            (UIApplication.sharedApplication().delegate as! AppDelegate).memes.removeAtIndex(indexPath.row)
+            memes.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             tableView.reloadData()
         }

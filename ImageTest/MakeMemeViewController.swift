@@ -34,6 +34,8 @@ class MakeMemeViewController: UIViewController, UIImagePickerControllerDelegate,
     }
     
     var meme: Meme! //???? Maybe?
+    //var originalImage: UIImage!
+    //var memedImage: UIImage!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -143,7 +145,7 @@ class MakeMemeViewController: UIViewController, UIImagePickerControllerDelegate,
     // MEME CREATION
     func save(memedImage: UIImage) {
         //Create the Meme
-        var meme = Meme(textTop: topText.text!, textBottom: bottomText.text!, originalImage: imageView.image!, memedImage: memedImage)
+        let meme = Meme(textTop: topText.text!, textBottom: bottomText.text!, originalImage: imageView.image!, memedImage: memedImage)
         
         // Add it to the memes array in the Application Delegate
         let object = UIApplication.sharedApplication().delegate
